@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateInstrumentDto } from './dto/instrument.dto';
@@ -12,6 +16,10 @@ export class InstrumentService {
   ) {}
 
   async create(createInstrumentDto: CreateInstrumentDto): Promise<Instrument> {
+    const existinst = await this.instrumentModel.findOne({
+      serialNumber: createInstrumentDto.serialNumber,
+    });
+    if (existinst) throw new ConflictException('Bu nomerli jihoz yaratilgan!');
     return await this.instrumentModel.create({
       ...createInstrumentDto,
       locationId: new Types.ObjectId(createInstrumentDto.locationId),

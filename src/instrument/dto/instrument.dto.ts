@@ -30,4 +30,7 @@ export class CreateInstrumentDto {
 
   @IsNotEmpty()
   magazine: Types.ObjectId;
+
+  @IsNotEmpty()
+  fixperiod: string;
 }

@@ -29,6 +29,9 @@ export class Instrument {
 
   @Prop({ required: true })
   magazine: Types.ObjectId;
+
+  @Prop({ required: true })
+  fixperiod: string;
 }
 
 export const InstrumentSchema = SchemaFactory.createForClass(Instrument);
